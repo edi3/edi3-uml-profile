@@ -86,7 +86,7 @@ Sample
 Data types are represented as the "type" of a UML attribute.  There are only 8 possible types:  
 
 | Data Type | Usage Rule |
-|---|---|---|
+|---|---|
 | Text |Any string of unicode characters |
 | Numeric|Any integer or floating point number|
 | Binary | A binary file URL.  File type is indicated by file extension which must be a valid MIME type|
@@ -152,32 +152,40 @@ A web resource represents a URL addressable object that has a defined informatio
 
 A web resource is modelled most like a UML interface. A web resource 
 
-* MUST be modelled as a UML class with stereotype <<resource>>
+* MUST be modelled as a UML class with stereotype `<<resource>>`
 * MUST be named using a noun, not a verb.
-* MUST be the target of a UML <<realisation>> relationship where the source is a UML class hierarchy that represents the resource information model.
+* MUST be the target of a UML `<<realisation>>` relationship where the source is a UML class hierarchy that represents the resource information model.
 * MUST include a styate machine model that defines the behaviour of the reource object (see more on this in the next section)
 * MUST include two mandatory UML attributes 
    * id:string - represnting the unique identifier of the resource instance (usually a GUID)
    * status:code - representing the current state of the resource instance
 * MUST include one or more UML operations that define the allowed actions on the resource which SHOULD be named as http verbe (GET / POST / PATCH etc).
-* MAY be the target of one or more UML aggregation relationships where the sources MUST be another <<resource>> classes. This is used to define sub-resource relationships.
-* MAY be the source of one of UML association relationshoips where the targets MUST be other <<resource>> classes. This is used to represent links to independent but related resources such as the invoice for a shipment or the bill of lading for a consignment.
+* MAY be the target of one or more UML aggregation relationships where the sources MUST be another `<<resource>>` class. This is used to define sub-resource relationships.
+* MAY be the source of one of UML association relationshoips where the targets MUST be other `<<resource>> `class. This is used to represent links to independent but related resources such as the invoice for a shipment or the bill of lading for a consignment.
 
 *sample*
 
 *implementation notes*
 
-* The UML <<resource>> type will map to a RESTful API web resource such as https://api.acme.com/v1/consignments/{123456789}.  The mapping rules for Open API 3.0 specification generation are defined in the Open API 3.0 NDR specification.
+* The UML `<<resource>>` type will map to a RESTful API web resource such as `https://api.acme.com/v1/consignments/{123456789}`.  The mapping rules for Open API 3.0 specification generation are defined in the Open API 3.0 NDR specification.
 * Resopurce models are deliberately kept simple and so do not attempt to model things like different structures for different types of PATCH operations or a list of filters allowed in GET collection actions. These things are likely to vary by implementation.  Models and generated OpenAPI specifications published by edi3.org represent only the minimum conformant behaviour for an implemention.
 
 
 # Resource state lifecycle
 
+Each `<<resource>>` class MUST have an embedded UML state machine model that describes the state lifecycle of a resource. Resource state lifecvycles are important because 
+
+* They describe the set of allowed states and allowed transitions between states. For example an `invoice` resource may transition through `received`, `approved`, `disputed`, `amended`, and `paid`.  The precise meanings of each state can have signifcant legal or commercial significance (eg financing an `approved` invoice will have less risk and hence lower cost than financing a `received` invoice)
+* Under edi3 technical specification guidelines, every resource owner SHOULD publish an event to all authorised subscribers whenever a resource transitions from one state to another. So the state lifecycle model tells susbsriber what they can listen for.
+
+The UML profile for state lifecycles is very simple as it is just a minimal UML state machine
+
+* MUST iunclude an initial and final state and at least one simple state.
+* MUST include at least one state transition into and out of each state.
+* state names MUST be unique within one state lifecycle and represent the list of allowed values for the "status" attribute of the parent resource.
+* All 
 
 
-## States
-
-## Transitions
 
  
 
