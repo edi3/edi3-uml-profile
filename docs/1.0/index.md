@@ -183,7 +183,11 @@ The UML profile for state lifecycles is very simple as it is just a minimal UML 
 * MUST iunclude an initial and final state and at least one simple state.
 * MUST include at least one state transition into and out of each state.
 * state names MUST be unique within one state lifecycle and represent the list of allowed values for the "status" attribute of the parent resource.
-* All 
+* All transitions MUST have a UML trigger that describes the business event that triggered the transition.
+* triggers SHOULD include a target operation that links to the operation (POST/PATCH etc) of the resource action that triggered the event.
+
+*sample*
+
 
 
 
