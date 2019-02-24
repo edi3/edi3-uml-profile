@@ -50,14 +50,10 @@ Although this specification is inteneded to be independent of specific deploymen
  
 ## Licence
 
-This Specification is free software; you can redistribute it and/or modify it under the
-terms of the [GNU General Public License](http://www.gnu.org/licenses) as published by the Free Software Foundation; 
-either version 3 of the License, or (at your option) any later version.
+All material published on edi3.org including all parts of this specification are the intellectual property of the UN as per the [UN/CEFACT IPR Policy](https://www.unece.org/fileadmin/DAM/cefact/cf_plenary/plenary12/ECE_TRADE_C_CEFACT_2010_20_Rev2E_UpdatedIPRpolicy.pdf).
 
-This Specification is distributed in the hope that it will be useful, but WITHOUT ANY
-WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-PURPOSE. 
- 
+This Specification is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version. See http://www.gnu.org/licenses. 
+
 ## Change Process
 
 This document is governed by the [2/COSS](http://rfc.unprotocols.org/spec:2/COSS/) (COSS).
