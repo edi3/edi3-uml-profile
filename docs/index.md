@@ -2,7 +2,7 @@
 title: "edi3 UML Profile 1.0 Specification"
 specID: "uml-profile/1"
 status: "![raw](http://rfc.unprotocols.org/spec:2/COSS/raw.svg)"
-editors: "[Steven Capell](mailto:steven.capell@edi3.org)"
+editors: "[Steven Capell](mailto:steve.capell@gmail.com)"
 contributors: 
 ---
 
