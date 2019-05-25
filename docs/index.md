@@ -180,7 +180,7 @@ The UML aggregation relationship is used to indicate a containment relationship 
 
 ### API Serialisation Note
 
-Only the `{id}` properties of the target class are embedded into the source schema. So, in the example above, `GET /TransportMovement would return all properties of `TransportMovement` and only the `Identification` and `Name` of the associated `TransportMeans` - because those are the properties with the UML 'isID' flag set. The JSON API header would also carry a {link} element that holds the URL of the `Transportmeans` resource. Consumers that also want to know addiotnal properties of the `TransportMeans` such as `GrossWeight` would simply follow the link with a `GET /TrannsportMeans/{id}`
+Only the `{id}` properties of the target class are embedded into the source schema. So, in the example above, `GET /TransportMovement` would return all properties of `TransportMovement` and only the `Identification` and `Name` of the associated `TransportMeans` - because those are the properties with the UML 'isID' flag set. The JSON API header would also carry a {link} element that holds the URL of the `Transportmeans` resource. Consumers that also want to know additional properties of the `TransportMeans` such as `GrossWeight` would simply follow the link with a `GET /TrannsportMeans/{id}`
 
 ## Relationship Class
 
