@@ -73,9 +73,13 @@ The highest level construct in edi3 modelling is the business domain.  A domain 
 * Subdomains are related to the parent domain using a UML package conmtainment relationship.
 * Domains and subdomains must have a description
 
-Sample 
+### Example 
 
 ![Domains](Domains.png)
+
+### API Serialisation Note
+
+Subdomains are implemented as API definitions.  One OpenAPI3 file per lowest level domain. 
 
 # Data types
 
@@ -97,11 +101,11 @@ There are only 8 possible core types:
 | Measure | A measured value with defined UOM from UNECE-Rec-20 |
 | Amount | A financial amoiunt with defined currency from ISO-4217 |
 
-*Types Diagram*
+### Example
 
-![CoreTypes](Types.png)
+![CoreTypes](CoreTypes.png)
 
-*API Serialisation Note*
+### API Serialisation Note
 
 Types will map to corresponding JSON Schema types as defined in relevant NDR specifications ([OpenAPI](https://edi3.org/api-ndr/) or [JSON-LD](https://edi3.org/json-ld-ndr/). Note that code and identifier types MUST resolve to unambiguous values at runtime and so MUST include the scheme URI.  For example a party `identification` element (with `identfier` type) for an Australian business would be serialised as`{"identification":"ato.gov.au/abn:123456789"}` where `ato.gov.au/abn` is the schemeURI and `123456789` is the ABN identifier value. The SchemeURI value SHOULD be compatible with the edi3 [resource discovery](https://edi3.org/discovery/) specification so that consumers can validate indentifier or code values at runtime.
 
@@ -109,9 +113,11 @@ Types will map to corresponding JSON Schema types as defined in relevant NDR spe
 
 In most cases, the core data types are sufficient for any use. However, in some cases it is useful to define restrictions as part of the model. The most common use is where a small numnber of stable code values are enumerated in the data model (as opposed to discuvered and validated at runtime). Common examples are entity status lifecycle values and party role enumerations. Qualified types are named using the convention {qualifier term}_{core type name}. The example shows the use of a qualified data type `TransportEventType_Code` to restrict the allowed values of the `Type` attribute of the `TransprotEvent` class.
 
+### Example
+
 ![QualifiedTypes](QualifiedTypes.png)
 
-*API Serialisation Note*
+### API Serialisation Note
 
 Qualified types are implemented as JSON objects with specific proerties an/or enumerated values.
 
@@ -128,11 +134,11 @@ Complex data elements are represented as containment relationships (UML aggregat
 * All classes, attributes, and containment relationships MUST include a description which provides a meaningful definition of the data element.
 * All attributes and containment relationship (target end) MUST have a cardinality.
 
-*Sample*
+### Example
 
 ![Elements](Elements.png)
 
-*API Serialisation Note*
+### API Serialisation Note
 
 UML Classes map to JSON Scherma objects and UML attributes become properties of the JSON Schema object. [1] cardinalitied map the the `required` shema property. UML cardinalities [0..*] or [1..*] map to a JSON array. 
 
@@ -144,19 +150,23 @@ The edi3 UML profile includes four standard UML class diagram relationship types
 
 The UML generalisation relationship is used to inicate sub-types or specialisations of an information resource.  For example, a `Vessel` is a type of `TransportMeans`.  The specialised class (ie `Vessel`) inherits all the properties of the general class (ie `TransportMeans`).  This modelling approach permits the separation of specific proerties such as `Helipad` (only for vessels) and `AxleLoad` (only for vehicles)
 
+### Example 
+
 ![Generalisation](Generalisation.png)
 
-*API Serialisation Note*
+### API Serialisation Note
 
 The concrete class contains all propertiers of the abstract - so for example, the API user will just see a `Vessel` resource will the combined properties of Vessel and TransportMeans.
 
 ## Composition Relationship
 
-The UML composition relationship is used to indicate a containment relationship between two classes where the contained class is part of the containing class.  It is essentially a complex property of the parent class that has no meaning without the parent context.  For example the 1TransportEvent1 class describes the sequence of scheduled, estimated, or actual events that consititute the movement record of a `TransportMovement`. 
+The UML composition relationship is used to indicate a containment relationship between two classes where the contained class is part of the containing class.  It is essentially a complex property of the parent class that has no meaning without the parent context.  For example the 1TransportEvent1 class describes the sequence of scheduled, estimated, or actual events that consititute the movement record of a `TransportMovement`.
+
+### Example
 
 ![Composition](Composition.png)
 
-*API Serialisation Note*
+### API Serialisation Note
 
 The target class and all it's attributes becomne part of the schema of the parent - ie $ref to a nested data structure. So, in the example above, `GET /TransportMovement` would return all properties of the `TransportMovement` class AND all properties of the contained `TransportEvent` as a nested array structure.
 
@@ -164,11 +174,11 @@ The target class and all it's attributes becomne part of the schema of the paren
 
 The UML aggregation relationship is used to indicate a containment relationship between two classes where the contained class may be re-used by other classes and has meaning independent of the relationship. It is essentially a link to a relevant but independent entity. For example a `TransportMeans` (such as a Vessel) is an independent concept from from a `TransportMovement` (such as a `Voyage`).  Both can exist and be meningful in isolation but clearly the the vessel identity is an important aspect of a voyage.
 
-*Sample*
+### Example
 
 ![Aggregation](Aggregation.png)
 
-*API Serialisation Note*
+### API Serialisation Note
 
 Only the `{id}` properties of the target class are embedded into the source schema. So, in the example above, `GET /TransportMovement would return all properties of `TransportMovement` and only the `Identification` and `Name` of the associated `TransportMeans` - because those are the properties with the UML 'isID' flag set. The JSON API header would also carry a {link} element that holds the URL of the `Transportmeans` resource. Consumers that also want to know addiotnal properties of the `TransportMeans` such as `GrossWeight` would simply follow the link with a `GET /TrannsportMeans/{id}`
 
@@ -176,9 +186,11 @@ Only the `{id}` properties of the target class are embedded into the source sche
 
 A UML relationship class is used when the relationship itself requires extra properties. The relatiionship class can be added to either the composition or aggregation relationship. For example, there are a number of different `Party` types that may participate in a `TransportMovement`. These can be distinguished via a `Role` property of the relationship as shown in the example below.  
 
+### Example 
+
 ![RelationshipClass](RelationshipClass.png)
 
-*API Serialisation Note*
+### API Serialisation Note
 
 The properties of association classes are added as extra properties of the target class during serialisation. So, in the example above, the JSAON schema would define an object `TransportMovementParty` as an arraye property of `TransportMovement` and the properties of the array object would be `Role` (from the relationship class) and `Identification`, `Name` (from `Party` class).
 
@@ -189,11 +201,11 @@ The UML directed association relationship is used to indicate a (non containment
 * When used between any two UML Interfaces, it indicates a URL to a linked web resource 
 * When used between any two UML classes, it indiates a semantic relationship 
 
-*Sample*
+### Example
 
 ![DirectedAssocaition](DirectedAssociation.png)
 
-*API Serialisation Note*
+### API Serialisation Note
 
 When used between two interfaces, indicates that the source API MAY include a HATEOAS style URL link to the target resource, implemented using [JSON-API](https://jsonapi.org/) `"links"` element. When used between two classes, the association is ignored for API serialisation (but is included in the JSON-LD ontology serialisation)
 
@@ -214,11 +226,11 @@ An interface is a standard UML stereotype which is based on a UML class. It is n
 * MAY be the target of one or more UML composition relationships where the sources MUST be another `<<interface>` class. This is used to define sub-resource relationships.
 * MAY be the target of one of or more UML directed association relationshoips where the source MUST be other `<<interface> `class. This is used to represent URL links to independent but related resources such as the invoice for a shipment or the bill of lading for a consignment.
 
-*sample*
+### Example
 
 ![Interfaces](Interfaces.png)
 
-*API Serialisation Note*
+### API Serialisation Note
 
 * The UML `<<interface>>` type will map to a RESTful API web resource such as `https://api.acme.com/v1/transportmovements/{123456789}`.  The mapping rules for Open API 3.0 specification generation are defined in the Open API 3.0 NDR specification.
 * Resopurce models are deliberately kept simple and so do not attempt to model things like different structures for different types of PATCH operations or a list of filters allowed in GET collection actions. These things are likely to vary by implementation.  Models and generated OpenAPI specifications published by edi3.org represent only the minimum conformant behaviour for an implemention.
@@ -228,7 +240,6 @@ An interface is a standard UML stereotype which is based on a UML class. It is n
 
 Each `<<interface>>` UML class MUST have an embedded UML state machine model that describes the state lifecycle of a resource. Resource state lifecvycles are important because they describe the set of allowed states and allowed transitions between states. For example an `invoice` resource may transition through `received`, `approved`, `disputed`, `amended`, and `paid`.  The precise meanings of each state can have signifcant legal or commercial significance (eg financing an `approved` invoice will have less risk and hence lower cost than financing a `received` invoice)
 
-
 The UML profile for state lifecycles is very simple as it is just a minimal UML state machine
 
 * MUST iunclude an initial and final state and at least one simple state.
@@ -237,11 +248,11 @@ The UML profile for state lifecycles is very simple as it is just a minimal UML 
 * All transitions MUST have a UML trigger that describes the business event that triggered the transition.
 * triggers SHOULD include a target operation that links to the operation (POST/PATCH etc) of the resource action that triggered the event.
 
-*sample*
+### Example
 
 ![StateLifecycle](StateLifecycle.png)
 
-*API Serialisation Note*
+### API Serialisation Note
 
 The state lifecycle is implemented as OpenAPI3 callbacks and subscriptions. A subscription to the resource should result in a callback to the subscriber for every transition in the state lifecycle.  The callbacks are implemented as "light ping" messages that simply advise the resource URL and the from/to state and trigger event. Subscribers may then decide whehther to GET the resource /subresource that has changed.
 
@@ -252,6 +263,8 @@ The state lifecycle is implemented as OpenAPI3 callbacks and subscriptions. A su
 The trasnsport movements example model provided below incorporates all the UML constructs covered in this specification. 
 
 ![Complete Example](CompleteExample.png)
+
+The starUML source file for this model is [here](SampleModel.mdj)
 
 ## Serialisation
 
