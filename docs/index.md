@@ -268,7 +268,7 @@ The starUML source file for this model is [here](SampleModel.mdj)
 
 ## Serialisation
 
-The sample model file generates [this OpenAPI specification](https://edi3.org/specs/edi3-uml-profile/master/swagger)
+The sample model file generates [this OpenAPI specification](https://edi3.org/specs/edi3-uml-profile/master/api-sample)
 
 
 
