@@ -4,6 +4,7 @@ specID: "uml-profile/1"
 status: "![raw](http://rfc.unprotocols.org/spec:2/COSS/raw.svg)"
 editors: "[Steven Capell](mailto:steve.capell@gmail.com)"
 contributors: 
+back_link: /uml-profile/
 ---
 
 ## Introduction
