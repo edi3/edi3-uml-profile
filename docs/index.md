@@ -233,7 +233,7 @@ An interface is a standard UML stereotype which is based on a UML class. It is n
 
 ### API Serialisation Note
 
-* The UML `<<interface>>` type will map to a RESTful API web resource such as `https://api.acme.com/v1/transportmovements/{123456789}`.  The mapping rules for Open API 3.0 specification generation are defined in the Open API 3.0 NDR specification.
+* The UML `<<interface>>` type will map to a RESTful API web resource such as `/v1/transportmovements/123456789`. Targets of composition relationships are implemented as sub-resources only eg /voyages/12456789/transportEvents. The mapping rules for Open API 3.0 specification generation are defined in the Open API 3.0 NDR specification.
 * Resopurce models are deliberately kept simple and so do not attempt to model things like different structures for different types of PATCH operations or a list of filters allowed in GET collection actions. These things are likely to vary by implementation.  Models and generated OpenAPI specifications published by edi3.org represent only the minimum conformant behaviour for an implemention.
 
 
