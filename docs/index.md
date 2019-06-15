@@ -21,13 +21,13 @@ This specification will have acheived its purpose when
 * Models can be successfully interchanged between different UML tools.
 * Open API 3.0 interface specifications and JSON-LD ontologies can be generated from the UML models.
 
- Like all edi3 specifications, the editors have aimed for simplicity and ease of use buy the target audience (business modellers in this case).  Therefore we 
+ Like all edi3 specifications, the editors have aimed for simplicity and ease of use by the target audience (business modellers in this case).  Therefore we 
 
  * focus on only two UML diagram types (class diagrams and statechart diagrams), and 
  * use a limited set of standard UML constructs (avoiding un-necessary use of stereotypes), and
  * provide plentiful examples.
 
-It is NOT a goal of this specification to provide guidance on best practices of information mnodelling. We assume that the reader is a capable infomration modeller that wishes to use the edi3 UML profile so that models are consistent and interchangeable.
+It is NOT a goal of this specification to provide guidance on best practices of information modelling. We assume that the reader is a capable information modeller that wishes to use the edi3 UML profile so that models are consistent and interchangeable.
 
 ## Status
 
@@ -37,13 +37,13 @@ This specification is at ![raw](http://rfc.unprotocols.org/spec:2/COSS/raw.svg) 
 
 Users of this specification will typically leverage existing semantic libraries such as the UN/CEFACT Core Component Library (CCL) or other data dictionaries based on ISO-11179. Therefore this specification maps UML constructs to both ISO-11179 and UN/CEFACT CCL.
 
-Although this specification is inteneded to be independent of specific deployment technologies, the eid3 suite is generally targeted at REST API implementation by web developers.  Therefore, where necessary, we introduce concepts into the UML profile that will be necessary for the generation of complete OPEN API 3.0 specifications and JSON-LD ontologies.
+Although this specification is intended to be independent of specific deployment technologies, the edi3 suite is generally targeted at REST API implementation by web developers.  Therefore, where necessary, we introduce concepts into the UML profile that will be necessary for the generation of complete OPEN API 3.0 specifications and JSON-LD ontologies.
 
 ## Glossary
 
 |Phrase | Definition|
 |------------ | ------------|
-|CCL| UN/CEFACT Core Compomnent Library|
+|CCL| UN/CEFACT Core Component Library|
 |UML|Unified Modelling Language|
 |UOM| Unit of Measure|
 
@@ -70,8 +70,8 @@ The highest level construct in edi3 modelling is the business domain.  A domain 
 
 * Domains are represented as a UML Package
 * Domain names must be unique across edi3.org
-* Domains may contain subdomains and, if so, subdomain names must be iunique within the parent doamin.
-* Subdomains are related to the parent domain using a UML package conmtainment relationship.
+* Domains may contain subdomains and, if so, subdomain names must be unique within the parent domain.
+* Subdomains are related to the parent domain using a UML package containment relationship.
 * Domains and subdomains must have a description
 
 ### Example 
@@ -100,7 +100,7 @@ There are only 8 possible core types:
 | Code | a code from a controlled list such as ISO-3166 country code|
 | Indicator |  a yes/no, true/false, 1/0 boolean|
 | Measure | A measured value with defined UOM from UNECE-Rec-20 |
-| Amount | A financial amoiunt with defined currency from ISO-4217 |
+| Amount | A financial amount with defined currency from ISO-4217 |
 
 ### Example
 
@@ -108,11 +108,11 @@ There are only 8 possible core types:
 
 ### API Serialisation Note
 
-Types will map to corresponding JSON Schema types as defined in relevant NDR specifications ([OpenAPI](https://edi3.org/api-ndr/) or [JSON-LD](https://edi3.org/json-ld-ndr/). Note that code and identifier types MUST resolve to unambiguous values at runtime and so MUST include the scheme URI.  For example a party `identification` element (with `identfier` type) for an Australian business would be serialised as`{"identification":"ato.gov.au/abn:123456789"}` where `ato.gov.au/abn` is the schemeURI and `123456789` is the ABN identifier value. The SchemeURI value SHOULD be compatible with the edi3 [resource discovery](https://edi3.org/discovery/) specification so that consumers can validate indentifier or code values at runtime.
+Types will map to corresponding JSON Schema types as defined in relevant NDR specifications ([OpenAPI](https://edi3.org/api-ndr/) or [JSON-LD](https://edi3.org/json-ld-ndr/). Note that code and identifier types MUST resolve to unambiguous values at runtime and so MUST include the scheme URI.  For example a party `identification` element (with `identfier` type) for an Australian business would be serialised as`{"identification":"ato.gov.au/abn:123456789"}` where `ato.gov.au/abn` is the schemeURI and `123456789` is the ABN identifier value. The SchemeURI value SHOULD be compatible with the edi3 [resource discovery](https://edi3.org/discovery/) specification so that consumers can validate identifier or code values at runtime.
 
 ## Qualified Types & Enumerations
 
-In most cases, the core data types are sufficient for any use. However, in some cases it is useful to define restrictions as part of the model. The most common use is where a small numnber of stable code values are enumerated in the data model (as opposed to discuvered and validated at runtime). Common examples are entity status lifecycle values and party role enumerations. Qualified types are named using the convention {qualifier term}_{core type name}. The example shows the use of a qualified data type `TransportEventType_Code` to restrict the allowed values of the `Type` attribute of the `TransprotEvent` class.
+In most cases, the core data types are sufficient for any use. However, in some cases it is useful to define restrictions as part of the model. The most common use is where a small number of stable code values are enumerated in the data model (as opposed to discovered and validated at runtime). Common examples are entity status lifecycle values and party role enumerations. Qualified types are named using the convention {qualifier term}_{core type name}. The example shows the use of a qualified data type `TransportEventType_Code` to restrict the allowed values of the `Type` attribute of the `TransportEvent` class.
 
 ### Example
 
@@ -120,13 +120,13 @@ In most cases, the core data types are sufficient for any use. However, in some 
 
 ### API Serialisation Note
 
-Qualified types are implemented as JSON objects with specific proerties an/or enumerated values.
+Qualified types are implemented as JSON objects with specific properties an/or enumerated values.
 
 # Data elements
 
-Every data element has globally unique name called the "dictionary entry name" of the form urn:org.unece:domain.class.property - for example "urn:org.unece:transport.transportevent.occurrencetime"
+Every data element has a globally unique name called the "dictionary entry name" of the form urn:org.unece:domain.class.property - for example "urn:org.unece:transport.transportevent.occurrencetime"
 
-Simple data elements are represented as attributes of UML classes - for example `OccurrenceTime` in `TransportEvent` class 
+Simple data elements are represented as attributes of UML classes - for example `OccurrenceTime` in `TransportEvent` class. 
 Complex data elements are represented as containment relationships (UML aggregation or composition) from source UML classes - for example `EventLocation` from `TransportEvent` class.
 
 * Class names MUST be unique within a domain.
@@ -141,7 +141,7 @@ Complex data elements are represented as containment relationships (UML aggregat
 
 ### API Serialisation Note
 
-UML Classes map to JSON Scherma objects and UML attributes become properties of the JSON Schema object. [1] cardinalitied map the the `required` shema property. UML cardinalities [0..*] or [1..*] map to a JSON array. 
+UML Classes map to JSON Scherma objects and UML attributes become properties of the JSON Schema object. [1] cardinalities map the the `required` schema property. UML cardinalities [0..*] or [1..*] map to a JSON array. 
 
 # Relationships
 
@@ -149,7 +149,7 @@ The edi3 UML profile includes four standard UML class diagram relationship types
 
 ## Generalisation Relationship
 
-The UML generalisation relationship is used to inicate sub-types or specialisations of an information resource.  For example, a `Vessel` is a type of `TransportMeans`.  The specialised class (ie `Vessel`) inherits all the properties of the general class (ie `TransportMeans`).  This modelling approach permits the separation of specific proerties such as `Helipad` (only for vessels) and `AxleLoad` (only for vehicles)
+The UML generalisation relationship is used to indicate sub-types or specialisations of an information resource.  For example, a `Vessel` is a type of `TransportMeans`.  The specialised class (ie `Vessel`) inherits all the properties of the general class (ie `TransportMeans`).  This modelling approach permits the separation of specific properties such as `Helipad` (only for vessels) and `AxleLoad` (only for vehicles)
 
 ### Example 
 
@@ -157,7 +157,7 @@ The UML generalisation relationship is used to inicate sub-types or specialisati
 
 ### API Serialisation Note
 
-The concrete class contains all propertiers of the abstract - so for example, the API user will just see a `Vessel` resource will the combined properties of Vessel and TransportMeans.
+The concrete class contains all propertiers of the abstract - so for example, the API user will just see a `Vessel` resource with the combined properties of Vessel and TransportMeans.
 
 ## Composition Relationship
 
@@ -169,11 +169,11 @@ The UML composition relationship is used to indicate a containment relationship 
 
 ### API Serialisation Note
 
-The target class and all it's attributes becomne part of the schema of the parent - ie $ref to a nested data structure. So, in the example above, `GET /TransportMovement` would return all properties of the `TransportMovement` class AND all properties of the contained `TransportEvent` as a nested array structure.
+The target class and all its attributes become part of the schema of the parent - ie $ref to a nested data structure. So, in the example above, `GET /TransportMovement` would return all properties of the `TransportMovement` class AND all properties of the contained `TransportEvent` as a nested array structure.
 
 ## Aggregation Relationship
 
-The UML aggregation relationship is used to indicate a containment relationship between two classes where the contained class may be re-used by other classes and has meaning independent of the relationship. It is essentially a link to a relevant but independent entity. For example a `TransportMeans` (such as a Vessel) is an independent concept from from a `TransportMovement` (such as a `Voyage`).  Both can exist and be meningful in isolation but clearly the the vessel identity is an important aspect of a voyage.
+The UML aggregation relationship is used to indicate a containment relationship between two classes where the contained class may be re-used by other classes and has meaning independent of the relationship. It is essentially a link to a relevant but independent entity. For example a `TransportMeans` (such as a Vessel) is an independent concept from from a `TransportMovement` (such as a `Voyage`).  Both can exist and be meaningful in isolation but clearly the the vessel identity is an important aspect of a voyage.
 
 ### Example
 
@@ -181,7 +181,7 @@ The UML aggregation relationship is used to indicate a containment relationship 
 
 ### API Serialisation Note
 
-Only the `{id}` properties of the target class are embedded into the source schema. So, in the example above, `GET /TransportMovement` would return all properties of `TransportMovement` and only the `Identification` and `Name` of the associated `TransportMeans` - because those are the properties with the UML 'isID' flag set. The JSON API header would also carry a {link} element that holds the URL of the `Transportmeans` resource. Consumers that also want to know additional properties of the `TransportMeans` such as `GrossWeight` would simply follow the link with a `GET /TrannsportMeans/{id}`
+Only the `{id}` properties of the target class are embedded into the source schema. So, in the example above, `GET /TransportMovement` would return all properties of `TransportMovement` and only the `Identification` and `Name` of the associated `TransportMeans` - because those are the properties with the UML 'isID' flag set. The JSON API header would also carry a {link} element that holds the URL of the `Transportmeans` resource. To retrieve the full properties of the `TransportMeans` element (eg to find `GrossWeight`), consumers would simply follow the link with a `GET /TransportMeans/{id}`
 
 ## Relationship Class
 
