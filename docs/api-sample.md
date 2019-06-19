@@ -1,4 +1,4 @@
 ---
 layout: swagger-ui
-api_url: ./api-sample.yml
+api_url: ./api-sample.json
 ---
