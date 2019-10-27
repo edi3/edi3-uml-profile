@@ -1,13 +1,17 @@
 # edi3 UML Profile Specification
 
- * [Version 1.0](/docs/1.0/index.md)
- 
-Specification: [UML Profile 1.0](http://edi3.org/specs/edi3-uml-profile/1.0/)
+[Specification](http://edi3.org/specs/edi3-uml-profile/develop/) (latest working draft)
 
-Community discussion/support: [edi3.org](http://edi3.org)
+[Project administration](https://github.com/edi3/edi3-uml-profile/wiki)
 
-Open source reference implementation: 
+[Mailing List](https://groups.google.com/a/edi3.org/forum/#!forum/uml-profile/join)
 
-Test suite: 
+[Discussion channel](https://edi3.slack.com/messages/spec-uml-profile/) (slack channel)
 
-Live test endpoint: 
+Reference implementation: Not yet available
+
+Test suite: Not yet available
+
+Live test endpoint: Not yet available
+
+[How to contribute](https://edi3.org/github/)
